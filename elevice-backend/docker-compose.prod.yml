@@ -1,0 +1,47 @@
+# Docker Compose Production Configuration
+# Use this file for production deployments with nginx
+# Run with: docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - api_gateway
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=production
+    
+  api_gateway:
+    # Remove port exposure - nginx will handle external access
+    ports: []
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped
+    
+  transcription_service:
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped
+      
+  evaluation_service:
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped
+      
+  tts_service:
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped
+      
+  interview_service:
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped

@@ -1,0 +1,57 @@
+services:
+  api_gateway:
+    build:
+      context: .
+      dockerfile: ./services/api_gateway/Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - ./services/api_gateway:/app
+      - ./shared:/app/shared
+
+  transcription_service:
+    build:
+      context: .
+      dockerfile: ./services/transcription_service/Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - ./services/transcription_service:/app
+      - ./shared:/app/shared
+      - ./credentials:/app/credentials
+
+  evaluation_service:
+    build:
+      context: .
+      dockerfile: ./services/evaluation_service/Dockerfile
+    ports:
+      - "8003:8002"
+    env_file:
+      - ./.env
+    volumes:
+      - ./services/evaluation_service:/app
+      - ./shared:/app/shared
+
+  tts_service:
+    build:
+      context: .
+      dockerfile: ./services/tts_service/Dockerfile
+    env_file:
+      - ./.env
+    volumes:
+      - ./services/tts_service:/app
+      - ./shared:/app/shared
+      - ./credentials:/app/credentials
+
+  interview_service:
+    build:
+      context: .
+      dockerfile: ./services/interview_service/Dockerfile
+    ports:
+      - "8004:8004"
+    env_file:
+      - ./.env
+    volumes:
+      - ./services/interview_service:/app
+      - ./shared:/app/shared
+

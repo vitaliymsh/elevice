@@ -1,0 +1,21 @@
+# Unified Interview Service requirements
+# Combines V2 database persistence with V3 intelligent agent capabilities
+
+# Web framework
+fastapi>=0.104.0
+uvicorn>=0.24.0
+httpx>=0.25.0
+
+# V3 Agent dependencies - True Agent Implementation
+google-generativeai
+python-dotenv
+
+# LangChain/LangGraph for proper agent implementation
+langchain>=0.1.0
+langchain-google-genai>=1.0.0
+langgraph>=0.0.40
+langchain-community>=0.0.20
+
+# Additional agent tools
+pydantic>=2.0.0
+typing-extensions>=4.0.0

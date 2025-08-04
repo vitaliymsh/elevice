@@ -1,0 +1,14 @@
+# Shared requirements for all services
+# Core dependencies that multiple services might need
+
+# Database
+supabase>=2.0.0
+
+# Environment management
+python-dotenv>=1.0.0
+
+# HTTP client
+httpx>=0.25.0
+
+# Data validation
+pydantic>=2.0.0
