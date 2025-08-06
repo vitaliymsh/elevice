@@ -123,6 +123,7 @@ export default function VoiceInterviewSimulator() {
   const { userId } = useUserSession()
 
   const [links, setLinks] = useState({ github: '', notion: '', video: '' })
+  const [showVideo, setShowVideo] = useState(false)
 
   useEffect(() => {
     async function fetchLinks() {
@@ -145,6 +146,9 @@ export default function VoiceInterviewSimulator() {
     }
     fetchLinks()
   }, [])
+
+  // Overlay close handler
+  const handleCloseVideo = () => setShowVideo(false)
 
   return (
     <div className="min-h-screen bg-[#F0F1F1] flex flex-col justify-between">
@@ -192,9 +196,42 @@ export default function VoiceInterviewSimulator() {
         <div className="flex gap-4">
           <a href={links.github} target="_blank" rel="noopener noreferrer" className="px-6 py-2 rounded border border-[#4A6D7C] bg-transparent text-[#4A6D7C] text-sm uppercase tracking-wide hover:bg-[#4A6D7C] hover:text-white transition-colors duration-200">🐙 GitHub</a>
           <a href={links.notion} target="_blank" rel="noopener noreferrer" className="px-6 py-2 rounded border border-[#4A6D7C] bg-transparent text-[#4A6D7C] text-sm uppercase tracking-wide hover:bg-[#4A6D7C] hover:text-white transition-colors duration-200">🗒️ Notion</a>
-          <a href={links.video} target="_blank" rel="noopener noreferrer" className="px-6 py-2 rounded border border-[#4A6D7C] bg-transparent text-[#4A6D7C] text-sm uppercase tracking-wide hover:bg-[#4A6D7C] hover:text-white transition-colors duration-200">🎥 Video</a>
+          <button
+            type="button"
+            className="px-6 py-2 rounded border border-[#4A6D7C] bg-transparent text-[#4A6D7C] text-sm uppercase tracking-wide hover:bg-[#4A6D7C] hover:text-white transition-colors duration-200"
+            onClick={() => setShowVideo(true)}
+          >🎥 Video</button>
         </div>
       </div>
+
+      {/* Video Overlay */}
+      {showVideo && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+          onClick={handleCloseVideo}
+        >
+          <div
+            className="relative bg-white rounded-lg shadow-lg p-4 max-w-2xl w-full"
+            style={{ boxShadow: '0 4px 32px rgba(0,0,0,0.25)' }}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              className="absolute top-2 right-2 text-gray-600 hover:text-black text-2xl font-bold"
+              onClick={handleCloseVideo}
+              aria-label="Close"
+            >×</button>
+            <div style={{ position: 'relative', paddingBottom: '69.3196405648267%', height: 0 }}>
+              <iframe
+                src="https://www.loom.com/embed/0b370f5cf8974c058fb95f0db37fe4f9?sid=1f32508d-3c4e-4597-aa78-39ede53f18bc"
+                frameBorder="0"
+                allowFullScreen
+                style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                title="Loom Video"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
